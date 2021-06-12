@@ -1,0 +1,87 @@
+server:
+  port: 8084
+  servlet:
+    context-path: /api
+
+putao-seo:
+  conf:
+    ip_regin_db_path: data/ip2region.db
+
+swagger:
+  enable: true
+
+spring:
+  application:
+    name: putao_seo
+  datasource:
+    url: jdbc:mysql://localhost:3306/testdb?characterEncoding=UTF-8
+    username: root
+    password: 12345678
+#    url: jdbc:mysql://172.21.0.12:3306/seo?characterEncoding=UTF-8
+#    username: seoUser
+#    password: m6i1m2a3
+    driverClassName: com.mysql.jdbc.Driver
+    minIdle: 5
+    validationQuery: SELECT 1
+    initialSize: 5
+    maxWait: 3000
+    poolPreparedStatements: true
+    filters: stat,wall,log4j
+    logSlowSql: true
+    testOnBorrow: false
+    maxOpenPreparedStatements: 20
+    testWhileIdle: true
+    minEvictableIdleTimeMillis: 9500
+    timeBetweenEvictionRunsMillis: 8500
+    testOnReturn: false
+    maxActive: 100
+#  data:
+#    elasticsearch:
+#      cluster-name: putao-english
+#      cluster-nodes: localhost:9300
+#      repositories:
+#        enabled: true
+# master修改
+  redis:
+#    需要持久化的，用来存放热门点击等
+    app:
+      host: 127.0.0.1
+      password: putaoputao
+      database: 1
+      port: 6379
+      pool:
+        max-idle: 500
+        min-idle: 0
+        max-active: 8
+        max-wait: -1
+      timeout: 100
+#    存放缓存
+    mini:
+      host: 127.0.0.1
+      password: putaoputao
+      database: 0
+      port: 6379
+      pool:
+        max-idle: 500
+        min-idle: 0
+        max-active: 8
+        max-wait: -1
+      timeout: 100
+
+# 配置pageHelper分页插件的内容
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+  helper-dialect: mysql
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+logging:
+  file: log/putaoseo.log
+  level:
+    com:
+      putao_seo:
+        api:
+          mapper: debug

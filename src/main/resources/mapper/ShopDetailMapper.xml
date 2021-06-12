@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.putao_seo.api.mapper.ShopDetailMapper">
+  <resultMap id="BriefResultMap" type="com.putao_seo.api.entity.ShopBrief">
+    <id column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="shop_img" jdbcType="VARCHAR" property="shopImg" />
+    <result column="shop_star" jdbcType="VARCHAR" property="shopStar" />
+    <result column="shop_tel" jdbcType="VARCHAR" property="shopTel" />
+    <result column="shop_comment_count" jdbcType="VARCHAR" property="shopCommentCount" />
+    <result column="shop_price" jdbcType="VARCHAR" property="shopPrice" />
+    <result column="shop_address" jdbcType="VARCHAR" property="shopAddress" />
+    <result column="shop_latlng" jdbcType="VARCHAR" property="shopLatlng" />
+    <result column="shop_region" jdbcType="VARCHAR" property="shopRegion" />
+    <result column="shop_tag" jdbcType="VARCHAR" property="shopTag" />
+    <result column="shop_service_tag" jdbcType="VARCHAR" property="shopServiceTag" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="com.putao_seo.api.entity.ShopDetail" extends="BriefResultMap">
+    <result column="shop_desc" jdbcType="VARCHAR" property="shopDesc" />
+    <result column="shop_business_hours" jdbcType="VARCHAR" property="shopBusinessHours" />
+    <result column="shop_pay" jdbcType="VARCHAR" property="shopPay" />
+    <result column="shop_status" jdbcType="TINYINT" property="shopStatus" />
+    <result column="shop_business_info" jdbcType="VARCHAR" property="shopBusinessInfo" />
+    <result column="shop_manageDangerous" jdbcType="VARCHAR" property="shopManagedangerous" />
+    <result column="shop_manageStatus" jdbcType="VARCHAR" property="shopManagestatus" />
+  </resultMap>
+
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    shop_id, shop_name, shop_img, shop_star, shop_tel, shop_comment_count, shop_price,
+    shop_desc, shop_business_hours, shop_pay, shop_address, shop_latlng, shop_region,
+    shop_tag, shop_status, shop_business_info, shop_manageDangerous, shop_manageStatus,
+    shop_service_tag
+  </sql>
+  <select id="selectByExample" parameterType="com.putao_seo.api.entity.ShopDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from shop_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="offset != null &amp;&amp; pageSize != null">
+      limit ${offset},${pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from shop_detail
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from shop_detail
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.putao_seo.api.entity.ShopDetailExample">
+    delete from shop_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.putao_seo.api.entity.ShopDetail">
+    insert into shop_detail (shop_id, shop_name, shop_img,
+      shop_star, shop_tel, shop_comment_count,
+      shop_price, shop_desc, shop_business_hours,
+      shop_pay, shop_address, shop_latlng,
+      shop_region, shop_tag, shop_status,
+      shop_business_info, shop_manageDangerous,
+      shop_manageStatus, shop_service_tag)
+    values (#{shopId,jdbcType=BIGINT}, #{shopName,jdbcType=VARCHAR}, #{shopImg,jdbcType=VARCHAR},
+      #{shopStar,jdbcType=VARCHAR}, #{shopTel,jdbcType=VARCHAR}, #{shopCommentCount,jdbcType=VARCHAR},
+      #{shopPrice,jdbcType=VARCHAR}, #{shopDesc,jdbcType=VARCHAR}, #{shopBusinessHours,jdbcType=VARCHAR},
+      #{shopPay,jdbcType=VARCHAR}, #{shopAddress,jdbcType=VARCHAR}, #{shopLatlng,jdbcType=VARCHAR},
+      #{shopRegion,jdbcType=VARCHAR}, #{shopTag,jdbcType=VARCHAR}, #{shopStatus,jdbcType=INTEGER},
+      #{shopBusinessInfo,jdbcType=VARCHAR}, #{shopManagedangerous,jdbcType=VARCHAR},
+      #{shopManagestatus,jdbcType=VARCHAR}, #{shopServiceTag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.putao_seo.api.entity.ShopDetail">
+    insert into shop_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="shopName != null">
+        shop_name,
+      </if>
+      <if test="shopImg != null">
+        shop_img,
+      </if>
+      <if test="shopStar != null">
+        shop_star,
+      </if>
+      <if test="shopTel != null">
+        shop_tel,
+      </if>
+      <if test="shopCommentCount != null">
+        shop_comment_count,
+      </if>
+      <if test="shopPrice != null">
+        shop_price,
+      </if>
+      <if test="shopDesc != null">
+        shop_desc,
+      </if>
+      <if test="shopBusinessHours != null">
+        shop_business_hours,
+      </if>
+      <if test="shopPay != null">
+        shop_pay,
+      </if>
+      <if test="shopAddress != null">
+        shop_address,
+      </if>
+      <if test="shopLatlng != null">
+        shop_latlng,
+      </if>
+      <if test="shopRegion != null">
+        shop_region,
+      </if>
+      <if test="shopTag != null">
+        shop_tag,
+      </if>
+      <if test="shopStatus != null">
+        shop_status,
+      </if>
+      <if test="shopBusinessInfo != null">
+        shop_business_info,
+      </if>
+      <if test="shopManagedangerous != null">
+        shop_manageDangerous,
+      </if>
+      <if test="shopManagestatus != null">
+        shop_manageStatus,
+      </if>
+      <if test="shopServiceTag != null">
+        shop_service_tag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopImg != null">
+        #{shopImg,jdbcType=VARCHAR},
+      </if>
+      <if test="shopStar != null">
+        #{shopStar,jdbcType=VARCHAR},
+      </if>
+      <if test="shopTel != null">
+        #{shopTel,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCommentCount != null">
+        #{shopCommentCount,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPrice != null">
+        #{shopPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="shopDesc != null">
+        #{shopDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="shopBusinessHours != null">
+        #{shopBusinessHours,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPay != null">
+        #{shopPay,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddress != null">
+        #{shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLatlng != null">
+        #{shopLatlng,jdbcType=VARCHAR},
+      </if>
+      <if test="shopRegion != null">
+        #{shopRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="shopTag != null">
+        #{shopTag,jdbcType=VARCHAR},
+      </if>
+      <if test="shopStatus != null">
+        #{shopStatus,jdbcType=INTEGER},
+      </if>
+      <if test="shopBusinessInfo != null">
+        #{shopBusinessInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopManagedangerous != null">
+        #{shopManagedangerous,jdbcType=VARCHAR},
+      </if>
+      <if test="shopManagestatus != null">
+        #{shopManagestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shopServiceTag != null">
+        #{shopServiceTag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.putao_seo.api.entity.ShopDetailExample" resultType="java.lang.Long">
+    select count(*) from shop_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update shop_detail
+    <set>
+      <if test="record.shopId != null">
+        shop_id = #{record.shopId,jdbcType=BIGINT},
+      </if>
+      <if test="record.shopName != null">
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopImg != null">
+        shop_img = #{record.shopImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopStar != null">
+        shop_star = #{record.shopStar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopTel != null">
+        shop_tel = #{record.shopTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopCommentCount != null">
+        shop_comment_count = #{record.shopCommentCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopPrice != null">
+        shop_price = #{record.shopPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopDesc != null">
+        shop_desc = #{record.shopDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopBusinessHours != null">
+        shop_business_hours = #{record.shopBusinessHours,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopPay != null">
+        shop_pay = #{record.shopPay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopAddress != null">
+        shop_address = #{record.shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopLatlng != null">
+        shop_latlng = #{record.shopLatlng,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopRegion != null">
+        shop_region = #{record.shopRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopTag != null">
+        shop_tag = #{record.shopTag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopStatus != null">
+        shop_status = #{record.shopStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopBusinessInfo != null">
+        shop_business_info = #{record.shopBusinessInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopManagedangerous != null">
+        shop_manageDangerous = #{record.shopManagedangerous,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopManagestatus != null">
+        shop_manageStatus = #{record.shopManagestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopServiceTag != null">
+        shop_service_tag = #{record.shopServiceTag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update shop_detail
+    set shop_id = #{record.shopId,jdbcType=BIGINT},
+    shop_name = #{record.shopName,jdbcType=VARCHAR},
+    shop_img = #{record.shopImg,jdbcType=VARCHAR},
+    shop_star = #{record.shopStar,jdbcType=VARCHAR},
+    shop_tel = #{record.shopTel,jdbcType=VARCHAR},
+    shop_comment_count = #{record.shopCommentCount,jdbcType=VARCHAR},
+    shop_price = #{record.shopPrice,jdbcType=VARCHAR},
+    shop_desc = #{record.shopDesc,jdbcType=VARCHAR},
+    shop_business_hours = #{record.shopBusinessHours,jdbcType=VARCHAR},
+    shop_pay = #{record.shopPay,jdbcType=VARCHAR},
+    shop_address = #{record.shopAddress,jdbcType=VARCHAR},
+    shop_latlng = #{record.shopLatlng,jdbcType=VARCHAR},
+    shop_region = #{record.shopRegion,jdbcType=VARCHAR},
+    shop_tag = #{record.shopTag,jdbcType=VARCHAR},
+    shop_status = #{record.shopStatus,jdbcType=INTEGER},
+    shop_business_info = #{record.shopBusinessInfo,jdbcType=VARCHAR},
+    shop_manageDangerous = #{record.shopManagedangerous,jdbcType=VARCHAR},
+    shop_manageStatus = #{record.shopManagestatus,jdbcType=VARCHAR},
+    shop_service_tag = #{record.shopServiceTag,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.putao_seo.api.entity.ShopDetail">
+    update shop_detail
+    <set>
+      <if test="shopName != null">
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopImg != null">
+        shop_img = #{shopImg,jdbcType=VARCHAR},
+      </if>
+      <if test="shopStar != null">
+        shop_star = #{shopStar,jdbcType=VARCHAR},
+      </if>
+      <if test="shopTel != null">
+        shop_tel = #{shopTel,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCommentCount != null">
+        shop_comment_count = #{shopCommentCount,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPrice != null">
+        shop_price = #{shopPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="shopDesc != null">
+        shop_desc = #{shopDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="shopBusinessHours != null">
+        shop_business_hours = #{shopBusinessHours,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPay != null">
+        shop_pay = #{shopPay,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddress != null">
+        shop_address = #{shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLatlng != null">
+        shop_latlng = #{shopLatlng,jdbcType=VARCHAR},
+      </if>
+      <if test="shopRegion != null">
+        shop_region = #{shopRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="shopTag != null">
+        shop_tag = #{shopTag,jdbcType=VARCHAR},
+      </if>
+      <if test="shopStatus != null">
+        shop_status = #{shopStatus,jdbcType=INTEGER},
+      </if>
+      <if test="shopBusinessInfo != null">
+        shop_business_info = #{shopBusinessInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopManagedangerous != null">
+        shop_manageDangerous = #{shopManagedangerous,jdbcType=VARCHAR},
+      </if>
+      <if test="shopManagestatus != null">
+        shop_manageStatus = #{shopManagestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shopServiceTag != null">
+        shop_service_tag = #{shopServiceTag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.putao_seo.api.entity.ShopDetail">
+    update shop_detail
+    set shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_img = #{shopImg,jdbcType=VARCHAR},
+      shop_star = #{shopStar,jdbcType=VARCHAR},
+      shop_tel = #{shopTel,jdbcType=VARCHAR},
+      shop_comment_count = #{shopCommentCount,jdbcType=VARCHAR},
+      shop_price = #{shopPrice,jdbcType=VARCHAR},
+      shop_desc = #{shopDesc,jdbcType=VARCHAR},
+      shop_business_hours = #{shopBusinessHours,jdbcType=VARCHAR},
+      shop_pay = #{shopPay,jdbcType=VARCHAR},
+      shop_address = #{shopAddress,jdbcType=VARCHAR},
+      shop_latlng = #{shopLatlng,jdbcType=VARCHAR},
+      shop_region = #{shopRegion,jdbcType=VARCHAR},
+      shop_tag = #{shopTag,jdbcType=VARCHAR},
+      shop_status = #{shopStatus,jdbcType=INTEGER},
+      shop_business_info = #{shopBusinessInfo,jdbcType=VARCHAR},
+      shop_manageDangerous = #{shopManagedangerous,jdbcType=VARCHAR},
+      shop_manageStatus = #{shopManagestatus,jdbcType=VARCHAR},
+      shop_service_tag = #{shopServiceTag,jdbcType=VARCHAR}
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectBriefByExample" parameterType="com.putao_seo.api.entity.ShopDetailExample" resultMap="BriefResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from shop_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="offset != null &amp;&amp; pageSize != null">
+      limit ${offset},${pageSize}
+    </if>
+  </select>
+  <select id="selectBriefByPrimaryKey" parameterType="java.lang.Long" resultMap="BriefResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from shop_detail
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </select>
+
+  <select id="getRecommentShopBriefListByRegion" parameterType="map" resultMap="BriefResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ((select s.*
+    from shop_detail s
+    join (select cs.company_id,
+    substring_index(group_concat(cs.shop_id order by shop_star desc, shop_comment_count desc),
+    ',', 1) as shop_id
+    from shop_detail sd
+    join company_shop cs on (cs.shop_id = sd.shop_id)
+    where sd.shop_status = 1
+    <if test="regionPath != null">
+      and shop_region like CONCAT(#{regionPath,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test="minCommentCount != null">
+      and sd.shop_comment_count >= #{minCommentCount,jdbcType=INTEGER}
+    </if>
+    group by company_id)
+    t on s.shop_id = t.shop_id)
+    union all
+    (select s.*
+    from shop_detail s
+    left join company_shop cs on s.shop_id = cs.shop_id
+    where s.shop_status = 1
+    and cs.shop_id is null
+    <if test="regionPath != null">
+      and s.shop_region like CONCAT(#{regionPath,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test="minCommentCount != null">
+      and s.shop_comment_count >= #{minCommentCount,jdbcType=INTEGER}
+    </if>
+    )) t
+    order by shop_star desc, shop_comment_count desc
+  </select>
+</mapper>

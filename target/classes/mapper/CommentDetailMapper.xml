@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.putao_seo.api.mapper.CommentDetailMapper">
+  <resultMap id="BaseResultMap" type="com.putao_seo.api.entity.CommentDetail">
+    <id column="comment_id" jdbcType="INTEGER" property="commentId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="comment_user_img" jdbcType="VARCHAR" property="commentUserImg" />
+    <result column="comment_user_name" jdbcType="VARCHAR" property="commentUserName" />
+    <result column="comment_star" jdbcType="INTEGER" property="commentStar" />
+    <result column="comment_score" jdbcType="VARCHAR" property="commentScore" />
+    <result column="comment_content" jdbcType="VARCHAR" property="commentContent" />
+    <result column="comment_time" jdbcType="TIMESTAMP" property="commentTime" />
+    <result column="comment_imgs" jdbcType="VARCHAR" property="commentImgs" />
+    <result column="comment_follows" jdbcType="VARCHAR" property="commentFollows" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    comment_id, shop_id, comment_user_img, comment_user_name, comment_star, comment_score,
+    comment_content, comment_time, comment_imgs, comment_follows
+  </sql>
+  <select id="selectByExample" parameterType="com.putao_seo.api.entity.CommentDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from comment_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="offset != null &amp;&amp; pageSize != null">
+      limit ${offset},${pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from comment_detail
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from comment_detail
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.putao_seo.api.entity.CommentDetailExample">
+    delete from comment_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.putao_seo.api.entity.CommentDetail">
+    insert into comment_detail (comment_id, shop_id, comment_user_img,
+      comment_user_name, comment_star, comment_score,
+      comment_content, comment_time, comment_imgs,
+      comment_follows)
+    values (#{commentId,jdbcType=INTEGER}, #{shopId,jdbcType=BIGINT}, #{commentUserImg,jdbcType=VARCHAR},
+      #{commentUserName,jdbcType=VARCHAR}, #{commentStar,jdbcType=INTEGER}, #{commentScore,jdbcType=VARCHAR},
+      #{commentContent,jdbcType=VARCHAR}, #{commentTime,jdbcType=TIMESTAMP}, #{commentImgs,jdbcType=VARCHAR},
+      #{commentFollows,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.putao_seo.api.entity.CommentDetail">
+    insert into comment_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        comment_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="commentUserImg != null">
+        comment_user_img,
+      </if>
+      <if test="commentUserName != null">
+        comment_user_name,
+      </if>
+      <if test="commentStar != null">
+        comment_star,
+      </if>
+      <if test="commentScore != null">
+        comment_score,
+      </if>
+      <if test="commentContent != null">
+        comment_content,
+      </if>
+      <if test="commentTime != null">
+        comment_time,
+      </if>
+      <if test="commentImgs != null">
+        comment_imgs,
+      </if>
+      <if test="commentFollows != null">
+        comment_follows,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="commentUserImg != null">
+        #{commentUserImg,jdbcType=VARCHAR},
+      </if>
+      <if test="commentUserName != null">
+        #{commentUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="commentStar != null">
+        #{commentStar,jdbcType=INTEGER},
+      </if>
+      <if test="commentScore != null">
+        #{commentScore,jdbcType=VARCHAR},
+      </if>
+      <if test="commentContent != null">
+        #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="commentTime != null">
+        #{commentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentImgs != null">
+        #{commentImgs,jdbcType=VARCHAR},
+      </if>
+      <if test="commentFollows != null">
+        #{commentFollows,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.putao_seo.api.entity.CommentDetailExample" resultType="java.lang.Long">
+    select count(*) from comment_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update comment_detail
+    <set>
+      <if test="record.commentId != null">
+        comment_id = #{record.commentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopId != null">
+        shop_id = #{record.shopId,jdbcType=BIGINT},
+      </if>
+      <if test="record.commentUserImg != null">
+        comment_user_img = #{record.commentUserImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentUserName != null">
+        comment_user_name = #{record.commentUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentStar != null">
+        comment_star = #{record.commentStar,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentScore != null">
+        comment_score = #{record.commentScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentContent != null">
+        comment_content = #{record.commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentTime != null">
+        comment_time = #{record.commentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.commentImgs != null">
+        comment_imgs = #{record.commentImgs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentFollows != null">
+        comment_follows = #{record.commentFollows,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update comment_detail
+    set comment_id = #{record.commentId,jdbcType=INTEGER},
+    shop_id = #{record.shopId,jdbcType=BIGINT},
+    comment_user_img = #{record.commentUserImg,jdbcType=VARCHAR},
+    comment_user_name = #{record.commentUserName,jdbcType=VARCHAR},
+    comment_star = #{record.commentStar,jdbcType=INTEGER},
+    comment_score = #{record.commentScore,jdbcType=VARCHAR},
+    comment_content = #{record.commentContent,jdbcType=VARCHAR},
+    comment_time = #{record.commentTime,jdbcType=TIMESTAMP},
+    comment_imgs = #{record.commentImgs,jdbcType=VARCHAR},
+    comment_follows = #{record.commentFollows,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.putao_seo.api.entity.CommentDetail">
+    update comment_detail
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="commentUserImg != null">
+        comment_user_img = #{commentUserImg,jdbcType=VARCHAR},
+      </if>
+      <if test="commentUserName != null">
+        comment_user_name = #{commentUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="commentStar != null">
+        comment_star = #{commentStar,jdbcType=INTEGER},
+      </if>
+      <if test="commentScore != null">
+        comment_score = #{commentScore,jdbcType=VARCHAR},
+      </if>
+      <if test="commentContent != null">
+        comment_content = #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="commentTime != null">
+        comment_time = #{commentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentImgs != null">
+        comment_imgs = #{commentImgs,jdbcType=VARCHAR},
+      </if>
+      <if test="commentFollows != null">
+        comment_follows = #{commentFollows,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.putao_seo.api.entity.CommentDetail">
+    update comment_detail
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      comment_user_img = #{commentUserImg,jdbcType=VARCHAR},
+      comment_user_name = #{commentUserName,jdbcType=VARCHAR},
+      comment_star = #{commentStar,jdbcType=INTEGER},
+      comment_score = #{commentScore,jdbcType=VARCHAR},
+      comment_content = #{commentContent,jdbcType=VARCHAR},
+      comment_time = #{commentTime,jdbcType=TIMESTAMP},
+      comment_imgs = #{commentImgs,jdbcType=VARCHAR},
+      comment_follows = #{commentFollows,jdbcType=VARCHAR}
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+</mapper>

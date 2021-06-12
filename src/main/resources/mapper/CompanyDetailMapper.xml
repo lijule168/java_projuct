@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.putao_seo.api.mapper.CompanyDetailMapper">
+  <resultMap id="BriefResultMap" type="com.putao_seo.api.entity.CompanyBrief">
+    <id column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="company_img" jdbcType="VARCHAR" property="companyImg" />
+    <result column="company_tel" jdbcType="VARCHAR" property="companyTel" />
+    <result column="company_address" jdbcType="VARCHAR" property="companyAddress" />
+    <result column="company_tel_email_address" jdbcType="VARCHAR" property="companyTelEmailAddress" />
+
+    <result column="company_latlng" jdbcType="VARCHAR" property="companyLatlng" />
+    <result column="company_region" jdbcType="VARCHAR" property="companyRegion" />
+    <result column="company_star" jdbcType="VARCHAR" property="companyStar" />
+    <result column="company_tag" jdbcType="VARCHAR" property="companyTag" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="com.putao_seo.api.entity.CompanyDetail" extends="BriefResultMap">
+    <result column="company_business_info" jdbcType="VARCHAR" property="companyBusinessInfo" />
+    <result column="company_manageDangerous" jdbcType="VARCHAR" property="companyManagedangerous" />
+    <result column="company_desc" jdbcType="VARCHAR" property="companyDesc" />
+    <result column="company_manageStatus" jdbcType="VARCHAR" property="companyManagestatus" />
+    <result column="company_status" jdbcType="TINYINT" property="companyStatus" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    company_id, company_name, company_img, company_tel, company_address, company_tel_email_address,
+    company_desc, company_business_info, company_manageDangerous, company_manageStatus,
+    company_status, company_latlng, company_region, company_star, company_tag
+  </sql>
+  <select id="selectByExample" parameterType="com.putao_seo.api.entity.CompanyDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from company_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="offset != null &amp;&amp; pageSize != null">
+      limit ${offset},${pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from company_detail
+    where company_id = #{companyId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from company_detail
+    where company_id = #{companyId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.putao_seo.api.entity.CompanyDetailExample">
+    delete from company_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.putao_seo.api.entity.CompanyDetail">
+    insert into company_detail (company_id, company_name, company_img,
+      company_tel, company_address, company_tel_email_address,
+      company_desc, company_business_info, company_manageDangerous,
+      company_manageStatus, company_status, company_latlng,
+      company_region, company_star, company_tag
+      )
+    values (#{companyId,jdbcType=BIGINT}, #{companyName,jdbcType=VARCHAR}, #{companyImg,jdbcType=VARCHAR},
+      #{companyTel,jdbcType=VARCHAR}, #{companyAddress,jdbcType=VARCHAR}, #{companyTelEmailAddress,jdbcType=VARCHAR},
+      #{companyDesc,jdbcType=VARCHAR}, #{companyBusinessInfo,jdbcType=VARCHAR}, #{companyManagedangerous,jdbcType=VARCHAR},
+      #{companyManagestatus,jdbcType=VARCHAR}, #{companyStatus,jdbcType=TINYINT}, #{companyLatlng,jdbcType=VARCHAR},
+      #{companyRegion,jdbcType=VARCHAR}, #{companyStar,jdbcType=VARCHAR}, #{companyTag,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.putao_seo.api.entity.CompanyDetail">
+    insert into company_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="companyName != null">
+        company_name,
+      </if>
+      <if test="companyImg != null">
+        company_img,
+      </if>
+      <if test="companyTel != null">
+        company_tel,
+      </if>
+      <if test="companyAddress != null">
+        company_address,
+      </if>
+      <if test="companyTelEmailAddress != null">
+        company_tel_email_address,
+      </if>
+      <if test="companyDesc != null">
+        company_desc,
+      </if>
+      <if test="companyBusinessInfo != null">
+        company_business_info,
+      </if>
+      <if test="companyManagedangerous != null">
+        company_manageDangerous,
+      </if>
+      <if test="companyManagestatus != null">
+        company_manageStatus,
+      </if>
+      <if test="companyStatus != null">
+        company_status,
+      </if>
+      <if test="companyLatlng != null">
+        company_latlng,
+      </if>
+      <if test="companyRegion != null">
+        company_region,
+      </if>
+      <if test="companyStar != null">
+        company_star,
+      </if>
+      <if test="companyTag != null">
+        company_tag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="companyName != null">
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyImg != null">
+        #{companyImg,jdbcType=VARCHAR},
+      </if>
+      <if test="companyTel != null">
+        #{companyTel,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null">
+        #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyTelEmailAddress != null">
+        #{companyTelEmailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyDesc != null">
+        #{companyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessInfo != null">
+        #{companyBusinessInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyManagedangerous != null">
+        #{companyManagedangerous,jdbcType=VARCHAR},
+      </if>
+      <if test="companyManagestatus != null">
+        #{companyManagestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="companyStatus != null">
+        #{companyStatus,jdbcType=TINYINT},
+      </if>
+      <if test="companyLatlng != null">
+        #{companyLatlng,jdbcType=VARCHAR},
+      </if>
+      <if test="companyRegion != null">
+        #{companyRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="companyStar != null">
+        #{companyStar,jdbcType=VARCHAR},
+      </if>
+      <if test="companyTag != null">
+        #{companyTag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.putao_seo.api.entity.CompanyDetailExample" resultType="java.lang.Long">
+    select count(*) from company_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update company_detail
+    <set>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.companyName != null">
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyImg != null">
+        company_img = #{record.companyImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyTel != null">
+        company_tel = #{record.companyTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyAddress != null">
+        company_address = #{record.companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyTelEmailAddress != null">
+        company_tel_email_address = #{record.companyTelEmailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyDesc != null">
+        company_desc = #{record.companyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyBusinessInfo != null">
+        company_business_info = #{record.companyBusinessInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyManagedangerous != null">
+        company_manageDangerous = #{record.companyManagedangerous,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyManagestatus != null">
+        company_manageStatus = #{record.companyManagestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyStatus != null">
+        company_status = #{record.companyStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.companyLatlng != null">
+        company_latlng = #{record.companyLatlng,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyRegion != null">
+        company_region = #{record.companyRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyStar != null">
+        company_star = #{record.companyStar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyTag != null">
+        company_tag = #{record.companyTag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update company_detail
+    set company_id = #{record.companyId,jdbcType=BIGINT},
+    company_name = #{record.companyName,jdbcType=VARCHAR},
+    company_img = #{record.companyImg,jdbcType=VARCHAR},
+    company_tel = #{record.companyTel,jdbcType=VARCHAR},
+    company_address = #{record.companyAddress,jdbcType=VARCHAR},
+    company_tel_email_address = #{record.companyTelEmailAddress,jdbcType=VARCHAR},
+    company_desc = #{record.companyDesc,jdbcType=VARCHAR},
+    company_business_info = #{record.companyBusinessInfo,jdbcType=VARCHAR},
+    company_manageDangerous = #{record.companyManagedangerous,jdbcType=VARCHAR},
+    company_manageStatus = #{record.companyManagestatus,jdbcType=VARCHAR},
+    company_status = #{record.companyStatus,jdbcType=TINYINT},
+    company_latlng = #{record.companyLatlng,jdbcType=VARCHAR},
+    company_region = #{record.companyRegion,jdbcType=VARCHAR},
+    company_star = #{record.companyStar,jdbcType=VARCHAR},
+    company_tag = #{record.companyTag,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.putao_seo.api.entity.CompanyDetail">
+    update company_detail
+    <set>
+      <if test="companyName != null">
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyImg != null">
+        company_img = #{companyImg,jdbcType=VARCHAR},
+      </if>
+      <if test="companyTel != null">
+        company_tel = #{companyTel,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null">
+        company_address = #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyTelEmailAddress != null">
+        company_tel_email_address = #{companyTelEmailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyDesc != null">
+        company_desc = #{companyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessInfo != null">
+        company_business_info = #{companyBusinessInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyManagedangerous != null">
+        company_manageDangerous = #{companyManagedangerous,jdbcType=VARCHAR},
+      </if>
+      <if test="companyManagestatus != null">
+        company_manageStatus = #{companyManagestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="companyStatus != null">
+        company_status = #{companyStatus,jdbcType=TINYINT},
+      </if>
+      <if test="companyLatlng != null">
+        company_latlng = #{companyLatlng,jdbcType=VARCHAR},
+      </if>
+      <if test="companyRegion != null">
+        company_region = #{companyRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="companyStar != null">
+        company_star = #{companyStar,jdbcType=VARCHAR},
+      </if>
+      <if test="companyTag != null">
+        company_tag = #{companyTag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where company_id = #{companyId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.putao_seo.api.entity.CompanyDetail">
+    update company_detail
+    set company_name = #{companyName,jdbcType=VARCHAR},
+      company_img = #{companyImg,jdbcType=VARCHAR},
+      company_tel = #{companyTel,jdbcType=VARCHAR},
+      company_address = #{companyAddress,jdbcType=VARCHAR},
+      company_tel_email_address = #{companyTelEmailAddress,jdbcType=VARCHAR},
+      company_desc = #{companyDesc,jdbcType=VARCHAR},
+      company_business_info = #{companyBusinessInfo,jdbcType=VARCHAR},
+      company_manageDangerous = #{companyManagedangerous,jdbcType=VARCHAR},
+      company_manageStatus = #{companyManagestatus,jdbcType=VARCHAR},
+      company_status = #{companyStatus,jdbcType=TINYINT},
+      company_latlng = #{companyLatlng,jdbcType=VARCHAR},
+      company_region = #{companyRegion,jdbcType=VARCHAR},
+      company_star = #{companyStar,jdbcType=VARCHAR},
+      company_tag = #{companyTag,jdbcType=VARCHAR}
+    where company_id = #{companyId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectBriefByExample" parameterType="com.putao_seo.api.entity.CompanyDetailExample" resultMap="BriefResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from company_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="offset != null &amp;&amp; pageSize != null">
+      limit ${offset},${pageSize}
+    </if>
+  </select>
+  <select id="selectBriefByPrimaryKey" parameterType="java.lang.Long" resultMap="BriefResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from company_detail
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </select>
+
+</mapper>
